@@ -32,6 +32,7 @@ $("#message-form").on("submit", function(e){
   }, function(){
 
   })
+  $("#msg-input").val("");
 });
 var locationButton = $("#send-location");
 locationButton.on("click", function(){
