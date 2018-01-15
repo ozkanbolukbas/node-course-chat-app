@@ -10,6 +10,7 @@ const io = require('socket.io').listen(server);
 const port = process.env.PORT || 3000;
 
 const {generateMessage, generateLocationMessage} = require("./utils/message");
+const {isRealString} = require("./utils/validation");
 
 const publicPath = path.join(__dirname, "../public")
 app.use(express.static(publicPath));
@@ -21,6 +22,15 @@ io.on("connection", (socket) => {
   socket.emit("newMessage", generateMessage("Admin", "Chat uygulamasına hoşgeldiniz"));
   //socket.broadcast.emit from Admin text New user joined
   socket.broadcast.emit("newMessage", generateMessage("Admin", "Yeni kullanıcı katıldı"));
+
+  socket.on("join", (params, callback)=>{
+    if (!isRealString(params.name) || !isRealString(params.room)) {
+      callback("Kullanıcı adı ve Oda adı giriniz.");
+    }
+    socket.join(params.room);
+    
+    callback();
+  });
 
   socket.on("createMessage", (message, callback) =>{
     console.log("createMessage", message);
