@@ -18,17 +18,16 @@ app.use(express.static(publicPath));
 io.on("connection", (socket) => {
   console.log("New user connected");
 
-  //socket emit form Admin text Welcome to chat app
-  socket.emit("newMessage", generateMessage("Admin", "Chat uygulamasına hoşgeldiniz"));
-  //socket.broadcast.emit from Admin text New user joined
-  socket.broadcast.emit("newMessage", generateMessage("Admin", "Yeni kullanıcı katıldı"));
 
   socket.on("join", (params, callback)=>{
     if (!isRealString(params.name) || !isRealString(params.room)) {
       callback("Kullanıcı adı ve Oda adı giriniz.");
     }
     socket.join(params.room);
-    
+
+
+    socket.emit("newMessage", generateMessage("ChatApp", "Chat uygulamasına hoşgeldiniz"));
+    socket.broadcast.to(params.room).emit("newMessage", generateMessage("ChatApp" , `${params.name} sohbete katıldı`));
     callback();
   });
 
