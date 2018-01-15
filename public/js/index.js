@@ -24,6 +24,7 @@ socket.on("newLocationMessage", function(message){
 
 });
 
+  $(document).ready(function() {
 $("#message-form").on("submit", function(e){
   e.preventDefault();
   socket.emit("createMessage", {
@@ -31,8 +32,9 @@ $("#message-form").on("submit", function(e){
     text: jQuery("[name=message]").val()
   }, function(){
 
+  });
+  $('#msg-input').val('');
   })
-  $("#msg-input").val("");
 });
 var locationButton = $("#send-location");
 locationButton.on("click", function(){
