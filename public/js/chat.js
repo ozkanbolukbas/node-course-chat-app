@@ -30,6 +30,16 @@ socket.on("disconnect", ()=>{
   console.log("Disconnect from server");
 });
 
+socket.on("updateUserList", function(users){
+  console.log(users);
+  var ol = jQuery('<ol></ol>');
+  users.forEach(function (user) {
+    ol.append(jQuery('<li></li>').text(user));
+  });
+
+  jQuery('#users').html(ol);
+});
+
 socket.on("newMessage", (message)=>{
   var formattedTime=moment(message.createdAt).format("k:mm")
   var template = $("#message-template").html();
@@ -57,14 +67,6 @@ socket.on("newLocationMessage", function(message){
   })
   $("#messages").append(html);
   scrollToBottom();
-  // var li= $("<li></li>");
-  // var a = $('<a target="_blank" >My current location</a>');
-  // li.text(`${message.from} ${formattedTime}: `);
-  // a.attr("href", message.url);
-  // li.append(a);
-  // console.log(li);
-  // $("#messages").append(li);
-
 });
 
 var messageTextBox = jQuery("[name=message]");
