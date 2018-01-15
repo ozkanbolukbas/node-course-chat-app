@@ -18,9 +18,9 @@ io.on("connection", (socket) => {
   console.log("New user connected");
 
   //socket emit form Admin text Welcome to chat app
-  socket.emit("newMessage", generateMessage("Admin", "Welcome the chat app"));
+  socket.emit("newMessage", generateMessage("Admin", "Chat uygulamasına hoşgeldiniz"));
   //socket.broadcast.emit from Admin text New user joined
-  socket.broadcast.emit("newMessage", generateMessage("Admin", "New user joined"));
+  socket.broadcast.emit("newMessage", generateMessage("Admin", "Yeni kullanıcı katıldı"));
 
   socket.on("createMessage", (message, callback) =>{
     console.log("createMessage", message);
