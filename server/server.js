@@ -46,7 +46,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("createLocationMessage", (cords)=>{
-    io.emit("newLocationMessage", generateLocationMessage("Admin", cords.latitude, cords.longitude))
+    var user = users.getUser(socket.id);
+    if (user) {
+      io.to(user.room).emit("newLocationMessage", generateLocationMessage(user.name, cords.latitude, cords.longitude));
+    }
   });
 
   socket.on("disconnect", ()=>{

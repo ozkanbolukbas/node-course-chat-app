@@ -50,10 +50,6 @@ socket.on("newMessage", (message)=>{
 
   $("#messages").append(html);
   scrollToBottom();
-  // var formattedTime=moment(message.createdAt).format("k:mm");
-  // var li = $("<li></li>");
-  // li.text(`${message.from} ${formattedTime} : ${message.text}`);
-  // $("#messages").append(li);
 });
 
 socket.on("newLocationMessage", function(message){
